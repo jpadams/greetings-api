@@ -6,6 +6,11 @@
   },
   "dependencies": [
     {
+      "name": "artifactory",
+      "source": "github.com/kpenfound/dag/artifactory@artifactory/v1.0.5",
+      "pin": "ba91473d1b40d49fbf28c16203dc18280f0ea69a"
+    },
+    {
       "name": "backend",
       "source": ".dagger/backend"
     },
