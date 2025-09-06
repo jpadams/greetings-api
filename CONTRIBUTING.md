@@ -20,7 +20,7 @@ The Greetings API is a simple greeting service with a beautiful frontend. It ser
 
 3. **Add the upstream remote** to keep your fork in sync:
    ```bash
-   git remote add upstream https://github.com/kpenfound/greetings-api.git
+   git remote add upstream https://github.com/jpadams/greetings-api.git
    ```
 
 4. **Keep your fork updated** by regularly pulling from upstream:
@@ -93,7 +93,7 @@ greetings-api/
 dagger call serve up
 
 # Or run from remote without cloning
-dagger -m github.com/kpenfound/greetings-api call serve up
+dagger -m github.com/jpadams/greetings-api call serve up
 ```
 
 The frontend will be available at http://localhost:8081/ and the backend at http://localhost:8080/
@@ -195,7 +195,7 @@ npm run lint
 
 If you need help or have questions:
 
-- Check the existing [issues](https://github.com/kpenfound/greetings-api/issues)
+- Check the existing [issues](https://github.com/jpadams/greetings-api/issues)
 - Look at the [demos](./README.md#demos) for examples
 - Review the [README](./README.md) for basic usage
 

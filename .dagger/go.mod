@@ -1,4 +1,4 @@
-module github.com/kpenfound/greetings-api/.dagger
+module github.com/jpadams/greetings-api/.dagger
 
 go 1.23.0
 

@@ -2,7 +2,7 @@ pipeline {
   agent { label 'dagger' }
 
   environment {
-    DAGGER_MODULE = "github.com/kpenfound/greetings-api/ci"
+    DAGGER_MODULE = "github.com/jpadams/greetings-api/ci"
   }
   stages {
     stage("dagger") {

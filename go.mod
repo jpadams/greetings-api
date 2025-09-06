@@ -1,4 +1,4 @@
-module github.com/kpenfound/greetings-api
+module github.com/jpadams/greetings-api
 
 go 1.18
 

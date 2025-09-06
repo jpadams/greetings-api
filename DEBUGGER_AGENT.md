@@ -32,7 +32,7 @@ The only dependency to run this agent is Dagger. Here are the [installation inst
 
 $ Fork or clone this repository and checkout the tricky_broken_tests branch:
 ```
-git clone https://github.com/kpenfound/greetings-api
+git clone https://github.com/jpadams/greetings-api
 cd greetings-api
 git checkout tricky_broken_tests
 ```

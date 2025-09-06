@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kpenfound/greetings-api/.dagger/internal/dagger"
+	"github.com/jpadams/greetings-api/.dagger/internal/dagger"
 )
 
 // Complete an assignment for the greetings project and get back the completed work

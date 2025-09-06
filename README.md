@@ -12,7 +12,7 @@ dagger call serve up
 
 or without even cloning this repo:
 ```
-dagger -m github.com/kpenfound/greetings-api call serve up
+dagger -m github.com/jpadams/greetings-api call serve up
 ```
 
 The frontend will be available at http://localhost:8081/

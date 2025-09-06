@@ -39,7 +39,7 @@ The only dependency to run this agent is Dagger. Here are the [installation inst
 
 Once you have Dagger, fork or clone this repository:
 ```
-git clone https://github.com/kpenfound/greetings-api
+git clone https://github.com/jpadams/greetings-api
 cd greetings-api
 ```
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/kpenfound/greetings-api/.dagger/internal/dagger"
+	"github.com/jpadams/greetings-api/.dagger/internal/dagger"
 )
 
 type Greetings struct {
@@ -28,7 +28,7 @@ func New(
 	// +ignore=[".git", "**/node_modules"]
 	source *dagger.Directory,
 	// +optional
-	// +default="github.com/kpenfound/greetings-api"
+	// +default="github.com/jpadams/greetings-api"
 	repo string,
 	// +optional
 	// +default="kylepenfound/greetings-api:latest"
