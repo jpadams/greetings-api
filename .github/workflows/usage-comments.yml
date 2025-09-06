@@ -7,19 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add comment to PR
-        uses: peter-evans/create-or-update-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Test this PR by running the following command:
 
             ```
-            dagger -m github.com/kpenfound/greetings-api@pull/${{ github.event.pull_request.number }}/head call check
+            dagger -m github.com/jpadams/greetings-api@pull/${{ github.event.pull_request.number }}/head call check
             ```
 
             Run this branch locally:
 
             ```
-            dagger -m github.com/kpenfound/greetings-api@pull/${{ github.event.pull_request.number }}/head call serve up
+            dagger -m github.com/jpadams/greetings-api@pull/${{ github.event.pull_request.number }}/head call serve up
             ```
           token: ${{ secrets.GITHUB_TOKEN }}

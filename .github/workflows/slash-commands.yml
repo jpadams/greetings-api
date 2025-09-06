@@ -10,8 +10,8 @@ jobs:
         id: generate-token
         uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ secrets.KAL_APP_ID }}
-          private-key: ${{ secrets.KAL_PRIVATE_KEY }}
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - uses: actions/checkout@v4
       - uses: dagger/dagger-for-github@8.0.0
       - name: slash agent
