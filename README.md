@@ -2,7 +2,7 @@
 
 A simple greeting api with a beatuiful frontend.
 
-copied over from https://github.com/kpenfound/greetings-api
+copied over from https://github.com/kpenfound/greetings-api with some changes
 
 ## Try it out!
 
