@@ -198,7 +198,7 @@ func (g *Greetings) Upload(
 		return "", err
 	}
 	key := dag.File("private.pem", plain)
-	keyAlias := "OtherKey"
+	keyAlias := "evidence"
 	traceURL, err := dag.Cloud().TraceURL(ctx)
 	if err != nil {
 		return "", err
