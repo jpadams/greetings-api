@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/jpadams/greetings-api/.dagger/internal/dagger"
 )
@@ -38,11 +39,11 @@ func New(
 	app string,
 ) *Greetings {
 	g := &Greetings{
-		Source:   source,
-		Repo:     repo,
-		Image:    image,
-		App:      app,
-		Backend:  dag.Backend(source.WithoutDirectory("website")),
+		Source:  source,
+		Repo:    repo,
+		Image:   image,
+		App:     app,
+		Backend: dag.Backend(source.WithoutDirectory("website")),
 	}
 	g.Frontend = dag.Frontend(source.Directory("website"), g.Backend.Serve())
 	return g
@@ -60,6 +61,12 @@ func (g *Greetings) Check(
 	// The model to use to debug debug tests
 	// +optional
 	model string,
+	// Artifact DSSE signing key
+	// +optional
+	signingKey *dagger.Secret,
+	// JFrog Artifactory Token
+	// +optional
+	jfrogToken *dagger.Secret,
 ) (string, error) {
 	// Lint
 	lintOut, err := g.Lint(ctx)
@@ -81,7 +88,10 @@ func (g *Greetings) Check(
 		return "", err
 	}
 
-	// Then Build
+	// Then Build Backend Binary, Upload, Evidence
+	artifact := g.Backend.Binary()
+	g.Upload(ctx, artifact, commit, "generic-repo", "greetings-api", signingKey, jfrogToken)
+	// Then Build All
 	_, err = g.Build().Sync(ctx)
 	if err != nil {
 		return "", err
@@ -152,4 +162,63 @@ func (g *Greetings) Release(ctx context.Context, tag string, ghToken *dagger.Sec
 
 	title := fmt.Sprintf("Release %s", tag)
 	return dag.GithubRelease().Create(ctx, g.Repo, tag, title, ghToken, dagger.GithubReleaseCreateOpts{Assets: assets})
+}
+
+// Upload binary to JFrog Artifactory for each commit
+func (g *Greetings) Upload(
+	ctx context.Context,
+	artifact *dagger.File,
+	commit string,
+	repo string,
+	name string,
+	signingKey *dagger.Secret,
+	accessToken *dagger.Secret,
+) (string, error) {
+	client := dag.Artifactory(accessToken, "https://daggerdemo.jfrog.io")
+	artifactPath := fmt.Sprintf("%s/%s-%s", repo, name, commit)
+	uploadOutput, err := client.Upload(ctx, artifact, artifactPath)
+	if err != nil {
+		return "", err
+	}
+
+	// Wait a moment for upload to process
+	time.Sleep(1 * time.Second)
+
+	// Upload evidence for the artifact
+	contents := `{
+  // Standard attestation fields:
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [{ ... }],
+
+  // Predicate:
+  "predicateType": "https://dagger.io/evidence/trace-url/v1",
+  "predicate": {
+    "traceURL": "https://dagger.cloud/traces/abcd1234"
+  }
+}`
+	predicate := dag.File("predicate.json", contents)
+	predicateType := "https://in-toto.io/Statement/v1"
+	plain, err := signingKey.Plaintext(ctx)
+	if err != nil {
+		return "", err
+	}
+	key := dag.File("private.pem", plain)
+	keyAlias := "OtherKey"
+	traceURL, err := dag.Cloud().TraceURL(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	createEvidenceOutput, err := client.CreateEvidence(
+		ctx,
+		predicate,
+		predicateType,
+		key,
+		dagger.ArtifactoryCreateEvidenceOpts{
+			KeyAlias:        keyAlias,
+			SubjectRepoPath: artifactPath,
+			TraceURL:        traceURL,
+		})
+
+	return fmt.Sprintf("%s\n%s", uploadOutput, createEvidenceOutput), nil
 }
