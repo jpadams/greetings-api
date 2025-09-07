@@ -186,11 +186,6 @@ func (g *Greetings) Upload(
 
 	// Upload evidence for the artifact
 	contents := `{
-  // Standard attestation fields:
-  "_type": "https://in-toto.io/Statement/v1",
-  "subject": [{ ... }],
-
-  // Predicate:
   "predicateType": "https://dagger.io/evidence/trace-url/v1",
   "predicate": {
     "traceURL": "https://dagger.cloud/traces/abcd1234"
