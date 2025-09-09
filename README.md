@@ -1,4 +1,4 @@
-# greetings-api
+# test greetings-api
 
 A simple greeting api with a beatuiful frontend.
 
