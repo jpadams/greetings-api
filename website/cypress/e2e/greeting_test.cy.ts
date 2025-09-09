@@ -10,12 +10,12 @@ describe("Greetings API", () => {
     cy.visit("/");
     cy.get("#greetingDisplay").should(
       "contain",
-      "Click the button to see a greeting!",
+      "Click the button to see a SwampUP greeting!",
     );
     cy.get("#randomGreetingButton").click();
     cy.get("#greetingDisplay").should(
       "not.contain",
-      "Click the button to see a greeting!",
+      "Click the button to see a SwampUP greeting!",
     );
   });
 });
